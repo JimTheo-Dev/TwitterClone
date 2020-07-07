@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     message: 'Hello Friends!'
   });
 });
-
+// I cloud use function() as well instead of =>
 app.get('/mews', (req, res) => {
 app.get('/mews', (req, res, next) => {
   mews
@@ -36,7 +36,7 @@ app.get('/mews', (req, res, next) => {
     });
     }).catch(next);
 });
-
+// Prevend XSS by checking if input is valid 
 function isValidMew(mew) {
   return mew.name && mew.name.toString().trim() !== '' && mew.name.toString().trim().length <= 50 &&
     mew.content && mew.content.toString().trim() !== '' && mew.content.toString().trim().length <= 140;
@@ -45,7 +45,7 @@ app.use(rateLimit({
   windowMs: 30 * 1000, // 30 seconds
   max: 1
 }));
-
+// i use toString() to prevend sql injections
 app.post('/mews', (req, res, next) => {
   if (isValidMew(req.body)) {
     const mew = {
